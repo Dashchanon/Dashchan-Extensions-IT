@@ -1,6 +1,6 @@
-# Dashchan Extension: lainchan
+# Dashchan Extension: diochan
 
-Extension for lainchan.org.
+Extension for diochan.com.
 
 ## License
 
