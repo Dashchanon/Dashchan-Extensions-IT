@@ -1,4 +1,4 @@
-package com.mishiranu.dashchan.chan.lainchan;
+package com.mishiranu.dashchan.chan.diochan;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -8,10 +8,10 @@ import android.util.Pair;
 import chan.content.ChanMarkup;
 import chan.text.CommentEditor;
 
-public class LainchanChanMarkup extends ChanMarkup {
+public class DiochanChanMarkup extends ChanMarkup {
 	private static final int SUPPORTED_TAGS = TAG_SPOILER | TAG_CODE;
 
-	public LainchanChanMarkup() {
+	public DiochanChanMarkup() {
 		addTag("pre", TAG_CODE);
 		addTag("span", "quote", TAG_QUOTE);
 		addTag("span", "spoiler", TAG_SPOILER);

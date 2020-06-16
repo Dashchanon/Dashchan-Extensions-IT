@@ -1,4 +1,4 @@
-package com.mishiranu.dashchan.chan.lainchan;
+package com.mishiranu.dashchan.chan.diochan;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -10,7 +10,7 @@ import chan.text.ParseException;
 import chan.text.TemplateParser;
 import chan.util.StringUtils;
 
-public class LainchanBoardsParser {
+public class DiochanBoardsParser {
 	private final String source;
 
 	private final ArrayList<BoardCategory> boardCategories = new ArrayList<>();
@@ -20,7 +20,7 @@ public class LainchanBoardsParser {
 
 	private static final Pattern PATTERN_BOARD_URI = Pattern.compile("/(.*?)/index.html");
 
-	public LainchanBoardsParser(String source) {
+	public DiochanBoardsParser(String source) {
 		this.source = source;
 	}
 
@@ -36,7 +36,7 @@ public class LainchanBoardsParser {
 		}
 	}
 
-	private static final TemplateParser<LainchanBoardsParser> PARSER = TemplateParser.<LainchanBoardsParser>builder()
+	private static final TemplateParser<DiochanBoardsParser> PARSER = TemplateParser.<DiochanBoardsParser>builder()
 			.equals("div", "class", "boardlist").open((i, holder, t, a) -> !(holder.boardListParsing = true))
 			.name("div").close((instance, holder, tagName) -> {
 		if (holder.boardListParsing) {

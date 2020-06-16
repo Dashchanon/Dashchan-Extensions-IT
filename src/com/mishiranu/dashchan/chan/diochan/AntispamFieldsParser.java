@@ -1,4 +1,4 @@
-package com.mishiranu.dashchan.chan.lainchan;
+package com.mishiranu.dashchan.chan.diochan;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -1,9 +1,10 @@
-package com.mishiranu.dashchan.chan.lainchan;
+package com.mishiranu.dashchan.chan.diochan;
 
 import chan.content.ChanConfiguration;
 
-public class LainchanChanConfiguration extends ChanConfiguration {
-	public LainchanChanConfiguration() {
+public class DiochanChanConfiguration extends ChanConfiguration {
+	//TODO set config for DioChan (based on the old extension's DiochanChanConfiguration class if config hasn't changed - unlikely)
+	public DiochanChanConfiguration() {
 		request(OPTION_READ_POSTS_COUNT);
 		setDefaultName("Anonymous");
 	}

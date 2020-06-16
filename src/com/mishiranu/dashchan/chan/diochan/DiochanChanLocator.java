@@ -1,4 +1,4 @@
-package com.mishiranu.dashchan.chan.lainchan;
+package com.mishiranu.dashchan.chan.diochan;
 
 import java.util.List;
 import java.util.regex.Pattern;
@@ -7,14 +7,14 @@ import android.net.Uri;
 
 import chan.content.ChanLocator;
 
-public class LainchanChanLocator extends ChanLocator {
+public class DiochanChanLocator extends ChanLocator {
 	private static final Pattern BOARD_PATH = Pattern.compile("/\\w+(?:/(?:(?:catalog|index|\\d+)\\.html)?)?");
 	private static final Pattern THREAD_PATH = Pattern.compile("/\\w+/res/(\\d+)\\.html");
 	private static final Pattern ATTACHMENT_PATH = Pattern.compile("/\\w+/src/\\d+\\.\\w+");
 
-	public LainchanChanLocator() {
-		addChanHost("lainchan.org");
-		addConvertableChanHost("www.lainchan.org");
+	public DiochanChanLocator() {
+		addChanHost("diochan.com");
+		addConvertableChanHost("www.diochan.com");
 		setHttpsMode(HttpsMode.CONFIGURABLE);
 	}
 
