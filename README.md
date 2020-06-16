@@ -4,7 +4,7 @@ This repository is specifically aimed for the maintainment of the Dashchan exten
 
 Cloned from Mishiranu's [Dashchan-Extensions](https://github.com/Mishiranu/Dashchan-Extensions) repo.
 
-#### Maintaned extensions:
+#### Maintained extensions:
 
  * [diochan](https://github.com/Dashchanon/Dashchan-Extensions-IT/tree/diochan)
 
