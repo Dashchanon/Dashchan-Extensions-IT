@@ -1,33 +1,13 @@
-# Dashchan Extensions
+# Dashchan Extensions IT
 
-This repository is designed to store Dashchan extensions source code.
+This repository is specifically aimed for the maintainment of the Dashchan extensions for italian imageboards. 
 
-The source code is available in specific branch for every extension.
+Cloned from Mishiranu's [Dashchan-Extensions](https://github.com/Mishiranu/Dashchan-Extensions) repo.
 
-Use `git clone -b %CHAN_NAME% https://github.com/Mishiranu/Dashchan-Extensions` to clone specific branch.
+#### Maintained extensions:
 
-Video player libraries extension is located in the [neighboring repository](https://github.com/Mishiranu/Dashchan-Webm).
+ * [diochan](https://github.com/Dashchanon/Dashchan-Extensions-IT/tree/diochan)
 
-General dependencies: [Public API](https://github.com/Mishiranu/Dashchan-Library), [Static Library](https://github.com/Mishiranu/Dashchan-Static).
+## License
 
-## Building Guide
-
-1. Install JDK 8 or higher
-2. Install Android SDK, define `ANDROID_HOME` environment variable or set `sdk.dir` in `local.properties`
-3. Install Gradle
-4. Run `gradle assembleRelease`
-
-The resulting APK file will appear in `build/outputs/apk` directory.
-
-The API library may be updated. Use `gradle --refresh-dependencies assembleRelease` to build, then.
-
-### Build Signed Binary
-
-You can create `keystore.properties` in the source code directory with the following properties:
-
-```properties
-store.file=%PATH_TO_KEYSTORE_FILE%
-store.password=%KEYSTORE_PASSWORD%
-key.alias=%KEY_ALIAS%
-key.password=%KEY_PASSWORD%
-```
+Extension is licensed under the [MIT License](LICENSE).
