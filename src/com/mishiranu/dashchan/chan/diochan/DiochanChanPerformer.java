@@ -158,7 +158,7 @@ public class DiochanChanPerformer extends ChanPerformer {
 		} catch (ParseException e) {
 			throw new InvalidResponseException();
 		}
-		String refererFix = locator.buildPath().toString().toLowerCase().endsWith("us.to") ? "/" + data.boardName + "/" : "";
+		String refererFix = locator.buildPath().toString().toLowerCase().endsWith("diochan.com") ? "/" + data.boardName + "/" : "";
 		Uri uri = locator.buildPath("post.php");
 		JSONObject jsonObject = new HttpRequest(uri, data).setPostMethod(entity)
 				.addHeader("Referer", locator.buildPath().toString() + refererFix)
