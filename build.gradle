@@ -2,6 +2,9 @@ buildscript {
 	repositories {
 		jcenter()
 		google()
+		flatDir {
+			dirs 'libs'
+		}
 	}
 
 	dependencies {
@@ -17,13 +20,16 @@ allprojects {
 	repositories {
 		jcenter()
 		google()
+		flatDir {
+			dirs 'libs'
+		}
 	}
 }
 
 apply plugin: 'com.android.application'
 
 dependencies {
-	compileOnly 'com.github.mishiranu:dashchan.library:1.6'
+	compileOnly (name:'dashchan.library.it', ext:'aar')
 	implementation 'com.github.mishiranu:dashchan.static:1.0'
 }
 

@@ -131,10 +131,11 @@ public class DiochanChanPerformer extends ChanPerformer {
 		entity.add("name", data.name);
 		entity.add("email", data.optionSage ? "salvia" : data.email);
 		entity.add("subject", data.subject);
+		entity.add("embed", data.embed);
 		entity.add("body", StringUtils.emptyIfNull(data.comment));
 		entity.add("password", data.password);
 		boolean spoiler = false;
-		if (data.attachments != null) {
+		if (data.embed == null || "".equals(data.embed.trim()) && data.attachments != null) {
 			for (int i = 0; i < data.attachments.length; i++) {
 				SendPostData.Attachment attachment = data.attachments[i];
 				attachment.addToEntity(entity, "file" + (i > 0 ? i + 1 : ""));
@@ -154,7 +155,7 @@ public class DiochanChanPerformer extends ChanPerformer {
 		String responseText = new HttpRequest(contentUri, data.holder).read().getString();
 		try {
 			AntispamFieldsParser.parseAndApply(responseText, entity, "board", "thread", "name", "email",
-					"subject", "body", "password", "file", "spoiler", "json_response");
+					"subject", "embed", "body", "password", "file", "spoiler", "json_response");
 		} catch (ParseException e) {
 			throw new InvalidResponseException();
 		}
@@ -203,6 +204,11 @@ public class DiochanChanPerformer extends ChanPerformer {
 			} else if (errorMessage.contains("Flood detected") || errorMessage.contains("Flood individuato") || errorMessage.contains(" Rallenta") ) {
 				errorType = ApiException.SEND_ERROR_TOO_FAST;
 			}
+			/* RESERVED
+			else if (errorMessage.contains("URL del video che hai incluso non trovato")) {
+				errorType = ApiException.SEND_ERROR_EMBED_ISSUE;
+			}
+			*/
 			if (errorType != 0) {
 				throw new ApiException(errorType);
 			}

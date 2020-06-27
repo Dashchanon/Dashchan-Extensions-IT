@@ -27,6 +27,7 @@ public class DiochanChanConfiguration extends ChanConfiguration {
 		posting.allowTripcode = namesAndEmails;
 		posting.allowEmail = namesAndEmails;
 		posting.allowSubject = true;
+		posting.allowEmbed = true;
 		posting.optionSage = namesAndEmails;
 		posting.attachmentCount = 3;
 		posting.attachmentMimeTypes.add("image/*");
