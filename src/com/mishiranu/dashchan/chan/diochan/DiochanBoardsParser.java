@@ -26,7 +26,25 @@ public class DiochanBoardsParser {
 
 	public ArrayList<BoardCategory> convert() throws ParseException {
 		PARSER.parse(source, this);
-		return boardCategories;
+		ArrayList<BoardCategory> categories = boardCategories;
+		for (int i = 0; i < boardCategories.size(); i++){
+			for(Board board : boardCategories.get(i).getBoards()){
+				if("b".equalsIgnoreCase(board.getBoardName())){
+					categories.set(i, new BoardCategory("NSFW", boardCategories.get(i).getBoards()));
+					break;
+				}
+				if("v".equalsIgnoreCase(board.getBoardName())){
+					categories.set(i, new BoardCategory("SFW", boardCategories.get(i).getBoards()));
+					break;
+				}
+			}
+		}
+		Board[] otherBoards = new Board[2];
+		otherBoards[0] = new Board("sug", "Suggerimenti & Lamentele");
+		otherBoards[1] = new Board("p", "Prova");
+		BoardCategory otherCategory = new BoardCategory("Altro", otherBoards);
+		categories.add(otherCategory);
+		return categories;
 	}
 
 	private void closeCategory() {
