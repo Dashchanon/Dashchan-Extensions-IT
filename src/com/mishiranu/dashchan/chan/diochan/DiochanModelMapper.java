@@ -2,6 +2,10 @@ package com.mishiranu.dashchan.chan.diochan;
 
 import android.text.Html;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -25,6 +29,30 @@ public class DiochanModelMapper {
 		String filename = CommonUtils.getJsonString(jsonObject, "filename");
 		String ext = CommonUtils.getJsonString(jsonObject, "ext");
 		String thumbnailExt = ".mp4".equalsIgnoreCase(ext.toLowerCase()) || ".webm".equalsIgnoreCase(ext.toLowerCase()) ? ".jpg" : ".png";
+		/*
+			Temporary fix for .png attachments with .webp thumbnails.
+		 */
+		if(".png".equalsIgnoreCase(ext.toLowerCase())){
+			HttpURLConnection urlConnection = null;
+			try {
+				URL url = new URL(locator.buildPath(boardName, "thumb", tim + ".webp").toString());
+				urlConnection = (HttpURLConnection) url.openConnection();
+				urlConnection.setRequestProperty("connection", "close");
+				urlConnection.setRequestMethod("HEAD");
+				urlConnection.getInputStream().close();
+				if(200 == urlConnection.getResponseCode()){
+					thumbnailExt = ".webp";
+				}
+			} catch (MalformedURLException e) {
+				// Ignore exception
+			} catch (IOException e) {
+				// Ignore exception
+			} finally {
+				if (urlConnection != null) {
+					urlConnection.disconnect();
+				}
+			}
+		}
 		attachment.setSize(jsonObject.optInt("fsize"));
 		attachment.setWidth(jsonObject.optInt("w"));
 		attachment.setHeight(jsonObject.optInt("h"));
