@@ -131,11 +131,13 @@ public class DiochanChanPerformer extends ChanPerformer {
 		entity.add("name", data.name);
 		entity.add("email", data.optionSage ? "salvia" : data.email);
 		entity.add("subject", data.subject);
-		entity.add("embed", data.embed);
+		if(!StringUtils.isEmpty(data.embed)) {
+			entity.add("embed", data.embed);
+		}
 		entity.add("body", StringUtils.emptyIfNull(data.comment));
 		entity.add("password", data.password);
 		boolean spoiler = false;
-		if (data.embed == null || "".equals(data.embed.trim()) && data.attachments != null) {
+		if (StringUtils.isEmpty(data.embed) && data.attachments != null) {
 			for (int i = 0; i < data.attachments.length; i++) {
 				SendPostData.Attachment attachment = data.attachments[i];
 				attachment.addToEntity(entity, "file" + (i > 0 ? i + 1 : ""));
@@ -154,8 +156,13 @@ public class DiochanChanPerformer extends ChanPerformer {
 				: locator.createBoardUri(data.boardName, 0);
 		String responseText = new HttpRequest(contentUri, data.holder).read().getString();
 		try {
-			AntispamFieldsParser.parseAndApply(responseText, entity, "board", "thread", "name", "email",
-					"subject", "embed", "body", "password", "file", "spoiler", "json_response");
+			if(StringUtils.isEmpty(data.embed)){
+				AntispamFieldsParser.parseAndApply(responseText, entity, "board", "thread", "name", "email",
+						"subject", "body", "password", "file", "spoiler", "json_response");
+			} else {
+				AntispamFieldsParser.parseAndApply(responseText, entity, "board", "thread", "name", "email",
+						"subject", "embed", "body", "password", "file", "spoiler", "json_response");
+			}
 		} catch (ParseException e) {
 			throw new InvalidResponseException();
 		}
