@@ -1,18 +1,16 @@
-package com.mishiranu.dashchan.chan.diochan;
+package com.mishiranu.dashchan.chan.vecchiochan;
 
 import android.text.Html;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import chan.content.model.EmbeddedAttachment;
 import chan.content.model.FileAttachment;
@@ -21,11 +19,17 @@ import chan.content.model.Posts;
 import chan.util.CommonUtils;
 import chan.util.StringUtils;
 
-public class DiochanModelMapper {
-	public static FileAttachment createFileAttachment(JSONObject jsonObject, DiochanChanLocator locator,
+public class VecchiochanModelMapper {
+	public static FileAttachment createFileAttachment(JSONObject jsonObject, VecchiochanChanLocator locator,
 			String boardName) throws JSONException {
 		FileAttachment attachment = new FileAttachment();
 		String tim = CommonUtils.getJsonString(jsonObject, "tim");
+		if(tim != null){
+			String[] parts = tim.split("/");
+			if (parts.length >= 4){
+				tim = parts[3];
+			}
+		}
 		String filename = CommonUtils.getJsonString(jsonObject, "filename");
 		String ext = CommonUtils.getJsonString(jsonObject, "ext");
 		String thumbnailExt = ".mp4".equalsIgnoreCase(ext.toLowerCase()) || ".webm".equalsIgnoreCase(ext.toLowerCase()) ? ".jpg" : ".png";
@@ -56,13 +60,13 @@ public class DiochanModelMapper {
 		attachment.setSize(jsonObject.optInt("fsize"));
 		attachment.setWidth(jsonObject.optInt("w"));
 		attachment.setHeight(jsonObject.optInt("h"));
-		attachment.setFileUri(locator, locator.buildPath(boardName, "src", tim + ext));
-		attachment.setThumbnailUri(locator, locator.buildPath(boardName, "thumb", tim + thumbnailExt));
+		attachment.setFileUri(locator, locator.buildPath("external", boardName, "src", tim + ext));
+		attachment.setThumbnailUri(locator, locator.buildPath("external", boardName, "thumb", tim + thumbnailExt));
 		attachment.setOriginalName(filename);
 		return attachment;
 	}
 
-	public static Post createPost(JSONObject jsonObject, DiochanChanLocator locator, String boardName)
+	public static Post createPost(JSONObject jsonObject, VecchiochanChanLocator locator, String boardName)
 			throws JSONException {
 		Post post = new Post();
 		if (jsonObject.optInt("sticky") != 0) {
@@ -163,7 +167,7 @@ public class DiochanModelMapper {
 		return post;
 	}
 
-	public static Posts createThread(JSONObject jsonObject, DiochanChanLocator locator, String boardName,
+	public static Posts createThread(JSONObject jsonObject, VecchiochanChanLocator locator, String boardName,
 									 boolean fromCatalog) throws JSONException {
 		Post[] posts;
 		int postsCount = 0;

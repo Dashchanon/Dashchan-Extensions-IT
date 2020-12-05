@@ -1,17 +1,17 @@
-package com.mishiranu.dashchan.chan.diochan;
+package com.mishiranu.dashchan.chan.vecchiochan;
+
+import android.util.Pair;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import android.util.Pair;
-
 import chan.content.ChanMarkup;
 import chan.text.CommentEditor;
 
-public class DiochanChanMarkup extends ChanMarkup {
+public class VecchiochanChanMarkup extends ChanMarkup {
 	private static final int SUPPORTED_TAGS = TAG_SPOILER | TAG_CODE;
 
-	public DiochanChanMarkup() {
+	public VecchiochanChanMarkup() {
 		addTag("pre", TAG_CODE);
 		addTag("span", "quote", TAG_QUOTE);
 		addTag("span", "spoiler", TAG_SPOILER);

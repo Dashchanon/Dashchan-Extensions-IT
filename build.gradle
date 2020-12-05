@@ -8,7 +8,7 @@ buildscript {
 	}
 
 	dependencies {
-		classpath 'com.android.tools.build:gradle:4.0.0'
+		classpath 'com.android.tools.build:gradle:4.1.1'
 		classpath 'me.tatarka:gradle-retrolambda:3.6.1'
 		classpath 'me.tatarka.retrolambda.projectlombok:lombok.ast:0.2.3.a2'
 	}
@@ -34,7 +34,7 @@ dependencies {
 }
 
 android {
-	compileSdkVersion 25
+	compileSdkVersion 30
 
 	sourceSets.main {
 		manifest.srcFile 'AndroidManifest.xml'
@@ -81,4 +81,6 @@ android {
 	defaultConfig {
 		minSdkVersion 16
 	}
+	buildToolsVersion '30.0.2'
+	ndkVersion '21.3.6528147'
 }

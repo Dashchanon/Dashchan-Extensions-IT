@@ -1,20 +1,20 @@
-package com.mishiranu.dashchan.chan.diochan;
+package com.mishiranu.dashchan.chan.vecchiochan;
+
+import android.net.Uri;
 
 import java.util.List;
 import java.util.regex.Pattern;
 
-import android.net.Uri;
-
 import chan.content.ChanLocator;
 
-public class DiochanChanLocator extends ChanLocator {
+public class VecchiochanChanLocator extends ChanLocator {
 	private static final Pattern BOARD_PATH = Pattern.compile("/\\w+(?:/(?:(?:catalog|index|\\d+)\\.html)?)?");
 	private static final Pattern THREAD_PATH = Pattern.compile("/\\w+/res/(\\d+)\\.html");
 	private static final Pattern ATTACHMENT_PATH = Pattern.compile("/\\w+/src/\\d+\\.\\w+");
 
-	public DiochanChanLocator() {
-		addChanHost("diochan.com");
-		addConvertableChanHost("www.diochan.com");
+	public VecchiochanChanLocator() {
+		addChanHost("vecchiochan.com");
+		addConvertableChanHost("www.vecchiochan.com");
 		setHttpsMode(HttpsMode.CONFIGURABLE);
 	}
 

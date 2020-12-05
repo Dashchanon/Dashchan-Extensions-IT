@@ -1,16 +1,17 @@
-package com.mishiranu.dashchan.chan.diochan;
+package com.mishiranu.dashchan.chan.vecchiochan;
 
-import java.util.ArrayList;
+import android.net.Uri;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.net.Uri;
+import java.util.ArrayList;
 
 import chan.content.ApiException;
 import chan.content.ChanPerformer;
 import chan.content.InvalidResponseException;
+import chan.content.model.BoardCategory;
 import chan.content.model.Post;
 import chan.content.model.Posts;
 import chan.http.HttpException;
@@ -22,10 +23,10 @@ import chan.text.ParseException;
 import chan.util.CommonUtils;
 import chan.util.StringUtils;
 
-public class DiochanChanPerformer extends ChanPerformer {
+public class VecchiochanChanPerformer extends ChanPerformer {
 	@Override
 	public ReadThreadsResult onReadThreads(ReadThreadsData data) throws HttpException, InvalidResponseException {
-		DiochanChanLocator locator = DiochanChanLocator.get(this);
+		VecchiochanChanLocator locator = VecchiochanChanLocator.get(this);
 		Uri uri = locator.buildPath(data.boardName, (data.isCatalog() ? "catalog"
 				: Integer.toString(data.pageNumber)) + ".json");
 		HttpResponse response = new HttpRequest(uri, data).setValidator(data.validator).read();
@@ -36,7 +37,7 @@ public class DiochanChanPerformer extends ChanPerformer {
 				JSONArray threadsArray = jsonObject.getJSONArray("threads");
 				Posts[] threads = new Posts[threadsArray.length()];
 				for (int i = 0; i < threads.length; i++) {
-					threads[i] = DiochanModelMapper.createThread(threadsArray.getJSONObject(i),
+					threads[i] = VecchiochanModelMapper.createThread(threadsArray.getJSONObject(i),
 							locator, data.boardName, false);
 				}
 				return new ReadThreadsResult(threads);
@@ -56,7 +57,7 @@ public class DiochanChanPerformer extends ChanPerformer {
 					for (int i = 0; i < jsonArray.length(); i++) {
 						JSONArray threadsArray = jsonArray.getJSONObject(i).getJSONArray("threads");
 						for (int j = 0; j < threadsArray.length(); j++) {
-							threads.add(DiochanModelMapper.createThread(threadsArray.getJSONObject(j),
+							threads.add(VecchiochanModelMapper.createThread(threadsArray.getJSONObject(j),
 									locator, data.boardName, true));
 						}
 					}
@@ -73,7 +74,7 @@ public class DiochanChanPerformer extends ChanPerformer {
 
 	@Override
 	public ReadPostsResult onReadPosts(ReadPostsData data) throws HttpException, InvalidResponseException {
-		DiochanChanLocator locator = DiochanChanLocator.get(this);
+		VecchiochanChanLocator locator = VecchiochanChanLocator.get(this);
 		Uri uri = locator.buildPath(data.boardName, "res", data.threadNumber + ".json");
 		JSONObject jsonObject = new HttpRequest(uri, data).setValidator(data.validator).read().getJsonObject();
 		if (jsonObject != null) {
@@ -82,7 +83,7 @@ public class DiochanChanPerformer extends ChanPerformer {
 				if (jsonArray.length() > 0) {
 					Post[] posts = new Post[jsonArray.length()];
 					for (int i = 0; i < posts.length; i++) {
-						posts[i] = DiochanModelMapper.createPost(jsonArray.getJSONObject(i),
+						posts[i] = VecchiochanModelMapper.createPost(jsonArray.getJSONObject(i),
 								locator, data.boardName);
 					}
 					return new ReadPostsResult(posts);
@@ -97,20 +98,17 @@ public class DiochanChanPerformer extends ChanPerformer {
 
 	@Override
 	public ReadBoardsResult onReadBoards(ReadBoardsData data) throws HttpException, InvalidResponseException {
-		DiochanChanLocator locator = DiochanChanLocator.get(this);
+		VecchiochanChanLocator locator = VecchiochanChanLocator.get(this);
 		Uri uri = locator.buildPath();
-		String responseText = new HttpRequest(uri, data).read().getString();
-		try {
-			return new ReadBoardsResult(new DiochanBoardsParser(responseText).convert());
-		} catch (ParseException e) {
-			throw new InvalidResponseException(e);
-		}
+		//String responseText = new HttpRequest(uri, data).read().getString();
+		ArrayList<BoardCategory> staticBoardCategories = VecchiochanBoardsParser.createStaticBoardCategories();
+		return new ReadBoardsResult(staticBoardCategories);
 	}
 
 	@Override
 	public ReadPostsCountResult onReadPostsCount(ReadPostsCountData data) throws HttpException,
 			InvalidResponseException {
-		DiochanChanLocator locator = DiochanChanLocator.get(this);
+		VecchiochanChanLocator locator = VecchiochanChanLocator.get(this);
 		Uri uri = locator.buildPath(data.boardName, "res", data.threadNumber + ".json");
 		JSONObject jsonObject = new HttpRequest(uri, data).setValidator(data.validator).read().getJsonObject();
 		if (jsonObject != null) {
@@ -151,7 +149,7 @@ public class DiochanChanPerformer extends ChanPerformer {
 		}
 		entity.add("json_response", "1");
 
-		DiochanChanLocator locator = DiochanChanLocator.get(this);
+		VecchiochanChanLocator locator = VecchiochanChanLocator.get(this);
 		Uri contentUri = data.threadNumber != null ? locator.createThreadUri(data.boardName, data.threadNumber)
 				: locator.createBoardUri(data.boardName, 0);
 		String responseText = new HttpRequest(contentUri, data.holder).read().getString();
@@ -166,10 +164,11 @@ public class DiochanChanPerformer extends ChanPerformer {
 		} catch (ParseException e) {
 			throw new InvalidResponseException();
 		}
-		String refererFix = locator.buildPath().toString().toLowerCase().endsWith("diochan.com") ? "/" + data.boardName + "/" : "";
+		//String refererFix = locator.buildPath().toString().toLowerCase().endsWith("vecchiochan.com") ? "/" + data.boardName + "/res/" + data.threadNumber + ".html" : "";
+		String refererFix = "/" + data.boardName + "/res/" + data.threadNumber + ".html";
 		Uri uri = locator.buildPath("post.php");
 		JSONObject jsonObject = new HttpRequest(uri, data).setPostMethod(entity)
-				.addHeader("Referer", "https://www.diochan.com" + refererFix)
+				.addHeader("Referer", "http://vecchiochan.com" + refererFix)
 				.setRedirectHandler(HttpRequest.RedirectHandler.STRICT).read().getJsonObject();
 		if (jsonObject == null) {
 			throw new InvalidResponseException();
@@ -219,7 +218,7 @@ public class DiochanChanPerformer extends ChanPerformer {
 			if (errorType != 0) {
 				throw new ApiException(errorType);
 			}
-			CommonUtils.writeLog("Diochan send message", errorMessage);
+			CommonUtils.writeLog("Vecchiochan send message", errorMessage);
 			throw new ApiException(errorMessage);
 		}
 		throw new InvalidResponseException();
@@ -228,7 +227,7 @@ public class DiochanChanPerformer extends ChanPerformer {
 	@Override
 	public SendDeletePostsResult onSendDeletePosts(SendDeletePostsData data) throws HttpException, ApiException,
 			InvalidResponseException {
-		DiochanChanLocator locator = DiochanChanLocator.get(this);
+		VecchiochanChanLocator locator = VecchiochanChanLocator.get(this);
 		UrlEncodedEntity entity = new UrlEncodedEntity("delete", "1", "board", data.boardName,
 				"password", data.password, "json_response", "1");
 		for (String postNumber : data.postNumbers) {
@@ -257,7 +256,7 @@ public class DiochanChanPerformer extends ChanPerformer {
 			if (errorType != 0) {
 				throw new ApiException(errorType);
 			}
-			CommonUtils.writeLog("Diochan delete message", errorMessage);
+			CommonUtils.writeLog("Vecchiochan delete message", errorMessage);
 			throw new ApiException(errorMessage);
 		}
 		throw new InvalidResponseException();
@@ -266,7 +265,7 @@ public class DiochanChanPerformer extends ChanPerformer {
 	@Override
 	public SendReportPostsResult onSendReportPosts(SendReportPostsData data) throws HttpException, ApiException,
 			InvalidResponseException {
-		DiochanChanLocator locator = DiochanChanLocator.get(this);
+		VecchiochanChanLocator locator = VecchiochanChanLocator.get(this);
 		UrlEncodedEntity entity = new UrlEncodedEntity("report", "1", "board", data.boardName,
 				"reason", StringUtils.emptyIfNull(data.comment), "json_response", "1");
 		for (String postNumber : data.postNumbers) {
@@ -283,7 +282,7 @@ public class DiochanChanPerformer extends ChanPerformer {
 		}
 		String errorMessage = jsonObject.optString("error");
 		if (errorMessage != null) {
-			CommonUtils.writeLog("Diochan report message", errorMessage);
+			CommonUtils.writeLog("Vecchiochan report message", errorMessage);
 			throw new ApiException(errorMessage);
 		}
 		throw new InvalidResponseException();

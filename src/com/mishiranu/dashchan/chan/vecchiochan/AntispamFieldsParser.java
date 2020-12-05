@@ -1,10 +1,10 @@
-package com.mishiranu.dashchan.chan.diochan;
+package com.mishiranu.dashchan.chan.vecchiochan;
+
+import android.util.Pair;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
-
-import android.util.Pair;
 
 import chan.http.RequestEntity;
 import chan.text.ParseException;

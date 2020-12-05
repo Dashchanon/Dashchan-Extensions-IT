@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="com.mishiranu.dashchan.chan.diochan"
+	package="com.mishiranu.dashchan.chan.vecchiochan"
 	android:versionCode="5"
 	android:versionName="1.8.1">
 
@@ -8,14 +8,14 @@
 
 	<application android:icon="@drawable/ic_launcher" android:allowBackup="false" android:label="@string/text_app_name">
 
-		<meta-data android:name="chan.extension.name" android:value="diochan" />
+		<meta-data android:name="chan.extension.name" android:value="vecchiochan" />
 		<meta-data android:name="chan.extension.version" android:value="1" />
-		<meta-data android:name="chan.extension.icon" android:resource="@drawable/ic_custom_diochan_white" />
+		<meta-data android:name="chan.extension.icon" android:resource="@drawable/ic_custom_vecchiochan_white" />
 		<meta-data android:name="chan.extension.source" android:value="//raw.githubusercontent.com/Dashchanon/Dashchan-IT/master/update/data.json" />
-		<meta-data android:name="chan.extension.class.configuration" android:value=".DiochanChanConfiguration" />
-		<meta-data android:name="chan.extension.class.performer" android:value=".DiochanChanPerformer" />
-		<meta-data android:name="chan.extension.class.locator" android:value=".DiochanChanLocator" />
-		<meta-data android:name="chan.extension.class.markup" android:value=".DiochanChanMarkup" />
+		<meta-data android:name="chan.extension.class.configuration" android:value=".VecchiochanChanConfiguration" />
+		<meta-data android:name="chan.extension.class.performer" android:value=".VecchiochanChanPerformer" />
+		<meta-data android:name="chan.extension.class.locator" android:value=".VecchiochanChanLocator" />
+		<meta-data android:name="chan.extension.class.markup" android:value=".VecchiochanChanMarkup" />
 
 		<activity android:name="chan.app.UriHandlerActivity" android:label="@string/text_activity_name"
 		    android:theme="@android:style/Theme.NoDisplay">
@@ -26,8 +26,8 @@
 				<category android:name="android.intent.category.BROWSABLE" />
 				<data android:scheme="http" />
 				<data android:scheme="https" />
-				<data android:host="diochan.com" />
-				<data android:host="www.diochan.com" />
+				<data android:host="vecchiochan.com" />
+				<data android:host="www.vecchiochan.com" />
 			</intent-filter>
 
 		</activity>

@@ -1,10 +1,10 @@
-package com.mishiranu.dashchan.chan.diochan;
+package com.mishiranu.dashchan.chan.vecchiochan;
 
 import chan.content.ChanConfiguration;
 
-public class DiochanChanConfiguration extends ChanConfiguration {
-	//TODO set config for DioChan (based on the old extension's DiochanChanConfiguration class if config hasn't changed - unlikely)
-	public DiochanChanConfiguration() {
+public class VecchiochanChanConfiguration extends ChanConfiguration {
+	
+	public VecchiochanChanConfiguration() {
 		request(OPTION_READ_POSTS_COUNT);
 		setDefaultName("Anonymous");
 	}
@@ -22,14 +22,13 @@ public class DiochanChanConfiguration extends ChanConfiguration {
 	@Override
 	public Posting obtainPostingConfiguration(String boardName, boolean newThread) {
 		Posting posting = new Posting();
-		boolean namesAndEmails = !"layer".equals(boardName);
-		posting.allowName = namesAndEmails;
-		posting.allowTripcode = namesAndEmails;
-		posting.allowEmail = namesAndEmails;
+		posting.allowName = true;
+		posting.allowTripcode = true;
+		posting.allowEmail = true;
 		posting.allowSubject = true;
-		posting.allowEmbed = true;
-		posting.optionSage = namesAndEmails;
-		posting.attachmentCount = 3;
+		posting.allowEmbed = false;
+		posting.optionSage = true;
+		posting.attachmentCount = 1;
 		posting.attachmentMimeTypes.add("image/*");
 		posting.attachmentSpoiler = true;
 		return posting;

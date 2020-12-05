@@ -1,6 +1,6 @@
-# Dashchan Extension: diochan
+# Dashchan Extension: vecchiochan
 
-Extension for diochan.com.
+Extension for vecchiochan.com.
 
 ## License
 
