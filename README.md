@@ -7,6 +7,7 @@ Cloned from Mishiranu's [Dashchan-Extensions](https://github.com/Mishiranu/Dashc
 #### Maintained extensions:
 
  * [diochan](https://github.com/Dashchanon/Dashchan-Extensions-IT/tree/diochan)
+ * [vecchiochan](https://github.com/Dashchanon/Dashchan-Extensions-IT/tree/vecchiochan)
 
 ## License
 
